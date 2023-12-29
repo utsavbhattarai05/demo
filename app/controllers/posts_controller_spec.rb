@@ -1,6 +1,6 @@
 # spec/controllers/posts_controller_spec.rb
 
-RSpec.describe PostsController, type: :controller do
+RSpec.describe PostsController do
   describe 'GET #index' do
     it 'returns a success response' do
       get :index
