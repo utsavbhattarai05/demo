@@ -1,4 +1,5 @@
-# spec/controllers/posts_controller_spec.rb
+
+require 'rails_helper'
 
 RSpec.describe PostsController do
   describe 'GET #index' do
