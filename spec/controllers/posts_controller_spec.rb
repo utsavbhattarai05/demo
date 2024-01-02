@@ -9,6 +9,7 @@ RSpec.describe PostsController do
     end
   end
 
+
   describe 'GET #show' do
     it 'returns a success response' do
       post = Post.create(title: 'Test Title', content: 'Test Content')
@@ -49,10 +50,10 @@ RSpec.describe PostsController do
     end
 
     context 'with invalid parameters' do
-      it 'returns a success response (i.e., to display the "new" template)' do
+      it 'returns an unprocessable entity status' do
         post_params = { post: { title: nil, content: 'Test Content' } }
         post :create, params: post_params
-        expect(response).to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
@@ -76,14 +77,17 @@ RSpec.describe PostsController do
     end
 
     context 'with invalid parameters' do
-      it 'returns a success response (i.e., to display the "edit" template)' do
+      it 'returns a success status (:unprocessable_entity)' do
         post = Post.create(title: 'Test Title', content: 'Test Content')
         invalid_attributes = { title: nil }
         patch :update, params: { id: post.id, post: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
+  
+    
+
 
   describe 'DELETE #destroy' do
     it 'destroys the requested post' do
@@ -94,9 +98,9 @@ RSpec.describe PostsController do
     end
 
     it 'redirects to the posts list' do
-      post = Post.create(title: 'Test Title', content: 'Test Content')
-      delete :destroy, params: { id: post.id }
-      expect(response).to redirect_to(posts_url)
-    end
+    post = Post.create(title: 'Test Title', content: 'Test Content')
+    delete :destroy, params: { id: post.id }
+    expect(response).to redirect_to(posts_url)
+  end
   end
 end
